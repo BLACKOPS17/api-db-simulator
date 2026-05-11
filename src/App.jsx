@@ -2,13 +2,16 @@ import { useState, useEffect, useRef } from "react";
 
 const DB_TABLES = {
   users: [
-    { id: 1, name: "Arjun Sharma", email: "arjun@example.com", age: 28 },
-    { id: 2, name: "Priya Patel", email: "priya@example.com", age: 34 },
-    { id: 3, name: "Ravi Kumar", email: "ravi@example.com", age: 22 },
+    { id: 1, name: "Jeevitha", email: "jeevitha@gmail.com", age: 28 },
+    { id: 2, name: "Saisuruthi", email: "saisuruthi@gmmail.com", age: 34 },
+    { id: 3, name: "Monisha", email: "monisha@gmail.com.com", age: 22 },
+    { id: 4, name: "Aarthi", email: "aarthi@gmail.com", age: 23 },
+    // { id: 5, name: "Sherly", email: "sherly@gmail.com", age: 26 },
+    { id: 5, name: "Archana", email: "archana@gmail.com", age: 20 },
   ],
 };
 
-let nextId = 4;
+let nextId = 7;
 
 const ENDPOINTS = [
   { method: "GET", path: "/api/users", description: "Fetch all users" },
@@ -231,6 +234,21 @@ export default function App() {
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: #111; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+        .main-container {
+          display: grid;
+          grid-template-columns: 320px 1fr;
+          gap: 0;
+          min-height: calc(100vh - 61px);
+        }
+
+        .right-panel-content {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          flex: 1;
+          min-height: 0;
+        }
+
         .step-node {
           transition: all 0.3s ease;
           cursor: default;
@@ -278,19 +296,56 @@ export default function App() {
           0%, 100% { background: transparent; }
           30% { background: #4ade8022; }
         }
+
+        @media (max-width: 900px) {
+          .main-container {
+            grid-template-columns: 1fr;
+          }
+          .left-panel {
+            border-right: none !important;
+            border-bottom: 1px solid #1a1a2e;
+          }
+          .right-panel-content {
+            grid-template-columns: 1fr;
+          }
+          .logs-panel {
+            border-right: none !important;
+            border-bottom: 1px solid #1a1a2e;
+          }
+          .flow-viz-inner {
+            min-width: 700px;
+          }
+          .flow-viz-container {
+            overflow-x: auto;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .header-container {
+            padding: 16px !important;
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 8px !important;
+          }
+          .header-subtitle {
+            margin-left: 24px;
+          }
+        }
       `}</style>
 
       {/* Header */}
-      <div style={{ borderBottom: "1px solid #1a1a2e", padding: "20px 32px", display: "flex", alignItems: "center", gap: "16px", background: "#050508" }}>
-        <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 8px #4ade80" }} />
-        <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, fontWeight: 800, letterSpacing: "0.05em", color: "#facc15" }}>API → BACKEND → DB</span>
-        <span style={{ color: "#444", fontSize: 12 }}>// full request lifecycle simulator</span>
+      <div className="header-container" style={{ borderBottom: "1px solid #1a1a2e", padding: "20px 32px", display: "flex", alignItems: "center", gap: "16px", background: "#050508" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+          <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 8px #4ade80" }} />
+          <span className="header-title" style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, fontWeight: 800, letterSpacing: "0.05em", color: "#facc15" }}>API → BACKEND → DB</span>
+        </div>
+        <span className="header-subtitle" style={{ color: "#444", fontSize: 12 }}>// full request lifecycle simulator</span>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "320px 1fr", gap: 0, minHeight: "calc(100vh - 61px)" }}>
+      <div className="main-container">
 
         {/* LEFT PANEL */}
-        <div style={{ borderRight: "1px solid #1a1a2e", display: "flex", flexDirection: "column", background: "#050508" }}>
+        <div className="left-panel" style={{ borderRight: "1px solid #1a1a2e", display: "flex", flexDirection: "column", background: "#050508" }}>
 
           {/* Endpoints */}
           <div style={{ padding: "20px", borderBottom: "1px solid #1a1a2e" }}>
@@ -380,11 +435,11 @@ export default function App() {
         </div>
 
         {/* RIGHT PANEL */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
 
           {/* Flow visualization */}
-          <div style={{ padding: "28px 32px", borderBottom: "1px solid #1a1a2e", background: "#06060c" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 0 }}>
+          <div className="flow-viz-container" style={{ padding: "28px 32px", borderBottom: "1px solid #1a1a2e", background: "#06060c" }}>
+            <div className="flow-viz-inner" style={{ display: "flex", alignItems: "center", gap: 0 }}>
               {STEPS.map((step, i) => (
                 <div key={step} style={{ display: "flex", alignItems: "center", flex: i < STEPS.length - 1 ? 1 : 0 }}>
                   <div
@@ -414,10 +469,10 @@ export default function App() {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", flex: 1, minHeight: 0 }}>
+          <div className="right-panel-content">
 
             {/* Logs */}
-            <div style={{ borderRight: "1px solid #1a1a2e", display: "flex", flexDirection: "column" }}>
+            <div className="logs-panel" style={{ borderRight: "1px solid #1a1a2e", display: "flex", flexDirection: "column" }}>
               <div style={{ padding: "14px 20px", borderBottom: "1px solid #1a1a2e", fontSize: 10, color: "#555", letterSpacing: "0.15em" }}>
                 EXECUTION LOG
               </div>
@@ -495,6 +550,20 @@ export default function App() {
             </div>
           </div>
         </div>
+      </div>
+      
+      {/* Footer */}
+      <div style={{ 
+        padding: "24px", 
+        borderTop: "1px solid #1a1a2e", 
+        textAlign: "center", 
+        background: "#050508",
+        color: "#444",
+        fontSize: "11px",
+        letterSpacing: "0.15em",
+        fontFamily: "'JetBrains Mono', monospace"
+      }}>
+        © {new Date().getFullYear()} | DEVELOPED BY <span style={{ color: "#facc15", fontWeight: 700 }}>BLACKOPS</span>
       </div>
     </div>
   );
